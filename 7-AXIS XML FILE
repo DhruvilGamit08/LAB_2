@@ -1,0 +1,73 @@
+nano robot_7axis.xml
+
+<mujoco model="7_axis_robot">
+  <compiler angle="degree"/>
+  <option gravity="0 0 -9.81" timestep="0.002"/>
+
+  <default>
+    <joint damping="1.5" armature="0.1"/>
+  </default>
+
+  <worldbody>
+    <geom type="plane" size="5 5 0.1" rgba="0.9 0.9 0.9 1"/>
+    <light pos="0 0 3" dir="0 0 -1"/>
+
+    <!-- Base Link -->
+    <body name="r7_base" pos="0 0 0">
+      <geom type="cylinder" size="0.1 0.1" rgba="0.2 0.2 0.2 1"/>
+
+      <!-- Joint 1: Base Yaw -->
+      <body name="r7_link1" pos="0 0 0.1">
+        <joint name="r7_j1" axis="0 0 1" range="-180 180"/>
+        <geom type="cylinder" size="0.08 0.1" pos="0 0 0.1" rgba="0.9 0.4 0.1 1"/>
+
+        <!-- Joint 2: Shoulder Pitch -->
+        <body name="r7_link2" pos="0 0 0.2">
+          <joint name="r7_j2" axis="0 1 0" range="-120 120"/>
+          <geom type="capsule" size="0.055" fromto="0 0 0 0 0 0.25" rgba="0.1 0.7 0.7 1"/>
+
+          <!-- Joint 3: Upper Arm Roll (Redundant Axis) -->
+          <body name="r7_link3" pos="0 0 0.25">
+            <joint name="r7_j3" axis="0 0 1" range="-170 170"/>
+            <geom type="cylinder" size="0.05 0.08" pos="0 0 0.08" rgba="0.9 0.4 0.1 1"/>
+
+            <!-- Joint 4: Elbow Pitch -->
+            <body name="r7_link4" pos="0 0 0.16">
+              <joint name="r7_j4" axis="0 1 0" range="-120 120"/>
+              <geom type="capsule" size="0.045" fromto="0 0 0 0 0 0.25" rgba="0.1 0.7 0.7 1"/>
+
+              <!-- Joint 5: Lower Arm Roll -->
+              <body name="r7_link5" pos="0 0 0.25">
+                <joint name="r7_j5" axis="0 0 1" range="-170 170"/>
+                <geom type="cylinder" size="0.04 0.08" pos="0 0 0.08" rgba="0.9 0.4 0.1 1"/>
+
+                <!-- Joint 6: Wrist Pitch -->
+                <body name="r7_link6" pos="0 0 0.16">
+                  <joint name="r7_j6" axis="0 1 0" range="-120 120"/>
+                  <geom type="capsule" size="0.035" fromto="0 0 0 0 0 0.15" rgba="0.1 0.7 0.7 1"/>
+
+                  <!-- Joint 7: Flange Roll -->
+                  <body name="r7_link7" pos="0 0 0.15">
+                    <joint name="r7_j7" axis="0 0 1" range="-360 360"/>
+                    <geom type="cylinder" size="0.025 0.04" pos="0 0 0.04" rgba="0.3 0.3 0.3 1"/>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+
+  <!-- Actuators for all 7 joints -->
+  <actuator>
+    <position name="a_r7_j1" joint="r7_j1" kp="200" damping="20"/>
+    <position name="a_r7_j2" joint="r7_j2" kp="250" damping="25"/>
+    <position name="a_r7_j3" joint="r7_j3" kp="200" damping="20"/>
+    <position name="a_r7_j4" joint="r7_j4" kp="150" damping="15"/>
+    <position name="a_r7_j5" joint="r7_j5" kp="100" damping="10"/>
+    <position name="a_r7_j6" joint="r7_j6" kp="50"  damping="5"/>
+    <position name="a_r7_j7" joint="r7_j7" kp="20"  damping="2"/>
+  </actuator>
+</mujoco>
